@@ -25,7 +25,7 @@ export default function RegisterPage() {
     try {
       await register({ name, email, password, role, phone, address })
       toast.success('You have been registered successfully.')
-      router.push('/login')
+      router.push('/dashboard')
     } catch (error) {
       toast.error('Please check your information and try again.')
     }

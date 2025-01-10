@@ -22,7 +22,9 @@ const login = async (req, res) => {
         const token = jsonwebtoken_1.default.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
             expiresIn: "24h",
         });
-        res.cookie("token", token, COOKIE_OPTIONS);
+        res.setHeader("Set-Cookie", [
+            `token=${token}; Path=/; Max-Age=${COOKIE_OPTIONS.maxAge / 1000}; HttpOnly; ${COOKIE_OPTIONS.secure ? "Secure;" : ""} SameSite=None`,
+        ]);
         res.json({ user: { id: user._id, name: user.name, role: user.role } });
     }
     catch (error) {
@@ -33,18 +35,17 @@ exports.login = login;
 const register = async (req, res) => {
     try {
         const { name, email, password, role, phone, address } = req.body;
-        // console.log(req.body);
         if (await User_1.default.findOne({ email })) {
             return res.status(400).json({ message: "Email already exists" });
         }
         const user = new User_1.default({ name, email, password, role, phone, address });
         await user.save();
-        // console.log(user);
         const token = jsonwebtoken_1.default.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
             expiresIn: "24h",
         });
-        console.log(token);
-        res.cookie("token", token, COOKIE_OPTIONS);
+        res.setHeader("Set-Cookie", [
+            `token=${token}; Path=/; Max-Age=${COOKIE_OPTIONS.maxAge / 1000}; HttpOnly; ${COOKIE_OPTIONS.secure ? "Secure;" : ""} SameSite=None`,
+        ]);
         res
             .status(201)
             .json({ user: { id: user._id, name: user.name, role: user.role } });
@@ -66,7 +67,6 @@ const validateToken = async (req, res) => {
             return res.status(401).json({ message: "Authentication required" });
         }
         const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
-        // Fetch user details if needed
         const user = await User_1.default.findById(decoded.userId).select("name role email");
         if (!user) {
             return res.status(401).json({ message: "Invalid token" });

@@ -23,7 +23,12 @@ export const login = async (req: Request, res: Response) => {
       expiresIn: "24h",
     });
 
-    res.cookie("token", token, COOKIE_OPTIONS);
+    res.setHeader("Set-Cookie", [
+      `token=${token}; Path=/; Max-Age=${
+        COOKIE_OPTIONS.maxAge / 1000
+      }; HttpOnly; ${COOKIE_OPTIONS.secure ? "Secure;" : ""} SameSite=None`,
+    ]);
+
     res.json({ user: { id: user._id, name: user.name, role: user.role } });
   } catch (error) {
     res.status(500).json({ message: "Login failed" });
@@ -34,8 +39,6 @@ export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password, role, phone, address } = req.body;
 
-    // console.log(req.body);
-
     if (await User.findOne({ email })) {
       return res.status(400).json({ message: "Email already exists" });
     }
@@ -43,15 +46,16 @@ export const register = async (req: Request, res: Response) => {
     const user = new User({ name, email, password, role, phone, address });
     await user.save();
 
-    // console.log(user);
-
     const token = jwt.sign({ userId: user._id, role: user.role }, JWT_SECRET, {
       expiresIn: "24h",
     });
 
-    console.log(token);
+    res.setHeader("Set-Cookie", [
+      `token=${token}; Path=/; Max-Age=${
+        COOKIE_OPTIONS.maxAge / 1000
+      }; HttpOnly; ${COOKIE_OPTIONS.secure ? "Secure;" : ""} SameSite=None`,
+    ]);
 
-    res.cookie("token", token, COOKIE_OPTIONS);
     res
       .status(201)
       .json({ user: { id: user._id, name: user.name, role: user.role } });
@@ -75,7 +79,6 @@ export const validateToken = async (req: Request, res: Response) => {
 
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
 
-    // Fetch user details if needed
     const user = await User.findById(decoded.userId).select("name role email");
     if (!user) {
       return res.status(401).json({ message: "Invalid token" });
