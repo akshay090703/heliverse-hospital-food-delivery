@@ -17,6 +17,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>
   logout: () => void
   register: (userData: { name: string; email: string; password: string; role: string; phone: string; address: string }) => Promise<void>
+  loading: boolean
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -25,6 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
   const pathname = usePathname()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const validateToken = async () => {
@@ -47,6 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
+      setLoading(true)
       const response = await axios.post('/auth/login', { email, password })
 
       if (response.status === 200) {
@@ -55,11 +58,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } catch (error) {
       throw new Error('Login failed')
+    } finally {
+      setLoading(false)
     }
   }
 
   const logout = async () => {
     try {
+      setLoading(true)
       const response = await axios.get('/auth/logout');
 
       if (response.status === 200) {
@@ -69,21 +75,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     } catch (error) {
       toast.error("Logout Failed")
+    } finally {
+      setLoading(false)
     }
   }
 
   const register = async (userData: { name: string; email: string; password: string; role: string; phone: string, address: string }) => {
     try {
+      setLoading(true)
       const response = await axios.post('/auth/register', userData)
 
       return response.data
     } catch (error) {
       throw new Error('Registration failed')
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register }}>
+    <AuthContext.Provider value={{ user, login, logout, register, loading }}>
       {children}
     </AuthContext.Provider>
   )

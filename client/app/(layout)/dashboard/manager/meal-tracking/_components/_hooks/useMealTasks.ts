@@ -6,6 +6,7 @@ import { toast } from "sonner";
 export function useMealTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [allTasks, setAllTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchTasks();
@@ -32,32 +33,41 @@ export function useMealTasks() {
     };
 
     try {
+      setLoading(true);
       await axios.post("/tasks", reqBody);
       toast.success("Meal task created successfully");
       fetchTasks();
     } catch (error) {
       toast.error("Failed to create meal task");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleUpdateTask = async (editingTask: Task) => {
     if (!editingTask) return;
     try {
+      setLoading(true);
       await axios.put(`/tasks/${editingTask._id}`, editingTask);
       toast.success("Task updated successfully");
       fetchTasks();
     } catch (error) {
       toast.error("Failed to update task");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDeleteTask = async (id: string) => {
     try {
+      setLoading(true);
       await axios.delete(`/tasks/${id}`);
       toast.success("Meal task deleted successfully");
       fetchTasks();
     } catch (error) {
       toast.error("Failed to delete meal task");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,5 +97,6 @@ export function useMealTasks() {
     handleUpdateTask,
     handleDeleteTask,
     handleUpdateTaskStatus,
+    loading,
   };
 }

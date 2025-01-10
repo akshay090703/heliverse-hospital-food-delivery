@@ -19,6 +19,7 @@ export default function PatientsPage() {
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null)
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchPatients()
@@ -43,34 +44,43 @@ export default function PatientsPage() {
 
     const handleCreatePatient = async (newPatient: Patient) => {
         try {
+            setLoading(true)
             await axios.post('/patients/', newPatient)
             toast.success('Patient created successfully')
             fetchPatients()
             setIsCreateDialogOpen(false)
         } catch (error) {
             toast.error('Failed to create patient')
+        } finally {
+            setLoading(false)
         }
     }
 
     const handleUpdatePatient = async (updatedPatient: Patient) => {
         try {
+            setLoading(true)
             await axios.put(`/patients/${updatedPatient._id}`, updatedPatient)
             toast.success('Patient updated successfully')
             fetchPatients()
             setIsEditDialogOpen(false)
         } catch (error) {
             toast.error('Failed to update patient')
+        } finally {
+            setLoading(false)
         }
     }
 
     const handleDeletePatient = async (id: string) => {
         try {
+            setLoading(true)
             await axios.delete(`/patients/${id}`)
             toast.success('Patient deleted successfully')
             fetchPatients()
             setIsDeleteDialogOpen(false)
         } catch (error) {
             toast.error('Failed to delete patient')
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -103,6 +113,7 @@ export default function PatientsPage() {
                 isOpen={isCreateDialogOpen}
                 onClose={() => setIsCreateDialogOpen(false)}
                 onCreatePatient={handleCreatePatient}
+                loading={loading}
             />
             {selectedPatient && (
                 <>
@@ -111,12 +122,14 @@ export default function PatientsPage() {
                         onClose={() => setIsEditDialogOpen(false)}
                         patient={selectedPatient}
                         onUpdatePatient={handleUpdatePatient}
+                        loading={loading}
                     />
                     <DeletePatientDialog
                         isOpen={isDeleteDialogOpen}
                         onClose={() => setIsDeleteDialogOpen(false)}
                         patientName={selectedPatient.name}
                         onDeletePatient={() => handleDeletePatient(selectedPatient._id!)}
+                        loading={loading}
                     />
                 </>
             )}

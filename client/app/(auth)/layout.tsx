@@ -8,12 +8,13 @@ const AuthLayout = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const { user, logout } = useAuth();
+    const { user, logout, loading } = useAuth();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     return (
         <>
             <Navbar
+                loading={loading}
                 user={user}
                 onLogout={logout}
                 onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}

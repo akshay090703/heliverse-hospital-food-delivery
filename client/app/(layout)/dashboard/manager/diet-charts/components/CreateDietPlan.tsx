@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
+import { Loader2 } from 'lucide-react'
 
 interface DietPlan {
     patientId: string;
@@ -42,6 +43,7 @@ const CreateDietPlan = ({ patientId }: { patientId: string }) => {
             night: { menu: [''], ingredients: [''], instructions: '' },
         },
     })
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchPatientName = async () => {
@@ -89,15 +91,15 @@ const CreateDietPlan = ({ patientId }: { patientId: string }) => {
         // console.log(dietPlan);
 
         try {
+            setLoading(true)
             const res = await axios.post('/diet-charts/', dietPlan)
-
-            console.log(res);
-
 
             toast.success('Diet plan created successfully')
             router.push('/dashboard/manager')
         } catch (error) {
             toast.error('Failed to create diet plan')
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -152,7 +154,11 @@ const CreateDietPlan = ({ patientId }: { patientId: string }) => {
                         </CardContent>
                     </Card>
                 ))}
-                <Button type="submit">Create Diet Plan</Button>
+                <Button type="submit" disabled={loading}>
+                    {loading && <Loader2 className='h-5 w-5' />}
+
+                    Create Diet Plan
+                </Button>
             </form>
         </div>
     )

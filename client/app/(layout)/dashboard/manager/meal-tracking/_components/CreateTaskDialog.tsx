@@ -11,15 +11,17 @@ import { Task } from './types'
 import { usePatients } from './_hooks/usePatients'
 import { useDietCharts } from './_hooks/useDietCharts'
 import { useUsers } from './_hooks/useUsers'
+import { Loader2 } from 'lucide-react'
 
 interface CreateTaskDialogProps {
   isOpen: boolean
   onClose: () => void
   onCreateTask: (task: Partial<Task>) => Promise<void>
   taskType: 'delivery' | 'meal'
+  loading: boolean
 }
 
-export function CreateTaskDialog({ isOpen, onClose, onCreateTask, taskType }: CreateTaskDialogProps) {
+export function CreateTaskDialog({ isOpen, onClose, onCreateTask, taskType, loading }: CreateTaskDialogProps) {
   const [newTask, setNewTask] = useState<Partial<Task>>({})
   const { patients, searchPatients } = usePatients()
   const { dietCharts, searchDietCharts } = useDietCharts()
@@ -216,7 +218,10 @@ export function CreateTaskDialog({ isOpen, onClose, onCreateTask, taskType }: Cr
             />
           </div>
         </div>
-        <Button onClick={handleCreateTask}>Create Task</Button>
+        <Button onClick={handleCreateTask} disabled={loading}>
+          {loading && <Loader2 className='h-5 w-5' />}
+          Create Task
+        </Button>
       </DialogContent>
     </Dialog>
   )

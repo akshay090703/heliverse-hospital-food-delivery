@@ -6,6 +6,7 @@ import { toast } from "sonner";
 export function useDeliveryTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [allTasks, setAllTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchTasks();
@@ -32,11 +33,14 @@ export function useDeliveryTasks() {
     };
 
     try {
+      setLoading(true);
       await axios.post("/tasks", reqBody);
       toast.success("Delivery task created successfully");
       fetchTasks();
     } catch (error) {
       toast.error("Failed to create delivery task");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,6 +56,7 @@ export function useDeliveryTasks() {
     };
 
     try {
+      setLoading(true);
       const res = await axios.put(`/tasks/${editingTask._id}`, reqBody);
       console.log(res);
 
@@ -59,16 +64,21 @@ export function useDeliveryTasks() {
       fetchTasks();
     } catch (error) {
       toast.error("Failed to update task");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDeleteTask = async (id: string) => {
     try {
+      setLoading(true);
       await axios.delete(`/tasks/${id}`);
       toast.success("Delivery task deleted successfully");
       fetchTasks();
     } catch (error) {
       toast.error("Failed to delete delivery task");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,5 +110,6 @@ export function useDeliveryTasks() {
     handleUpdateTask,
     handleDeleteTask,
     handleUpdateTaskStatus,
+    loading,
   };
 }

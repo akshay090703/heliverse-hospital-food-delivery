@@ -16,6 +16,7 @@ export default function MealBoxesPage() {
         mealType: 'morning',
         specialInstructions: '',
     })
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         fetchMealBoxes()
@@ -61,7 +62,9 @@ export default function MealBoxesPage() {
     }
 
     const createMealBox = async () => {
+
         try {
+            setLoading(true)
             await axios.post('/inner-pantry/meal-boxes', newMealBox)
             toast.success('Meal box created successfully')
             setNewMealBox({
@@ -74,16 +77,21 @@ export default function MealBoxesPage() {
             fetchMealBoxes()
         } catch (error) {
             toast.error('Failed to create meal box')
+        } finally {
+            setLoading(false)
         }
     }
 
     const deleteMealBox = async (mealBoxId: string) => {
         try {
+            setLoading(true)
             await axios.delete(`/inner-pantry/meal-boxes/${mealBoxId}`)
             toast.success('Meal box deleted successfully')
             fetchMealBoxes()
         } catch (error) {
-            toast('Failed to delete meal box')
+            toast.error('Failed to delete meal box')
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -98,6 +106,7 @@ export default function MealBoxesPage() {
                 onAssignMealBox={assignMealBox}
                 onUpdateDeliveryStatus={updateDeliveryStatus}
                 onDeleteMealBox={deleteMealBox}
+                loading={loading}
             />
         </div>
     )

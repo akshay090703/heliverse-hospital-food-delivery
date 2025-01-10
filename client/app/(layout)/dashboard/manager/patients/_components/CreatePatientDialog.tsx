@@ -12,9 +12,10 @@ interface CreatePatientDialogProps {
     isOpen: boolean
     onClose: () => void
     onCreatePatient: (patient: Patient) => void
+    loading: boolean
 }
 
-export function CreatePatientDialog({ isOpen, onClose, onCreatePatient }: CreatePatientDialogProps) {
+export function CreatePatientDialog({ isOpen, onClose, onCreatePatient, loading }: CreatePatientDialogProps) {
     const [patient, setPatient] = useState<Patient>({
         name: '',
         age: '',
@@ -24,7 +25,6 @@ export function CreatePatientDialog({ isOpen, onClose, onCreatePatient }: Create
         medicalDetails: { diseases: '', allergies: '' },
         otherDetails: { dietaryRestrictions: '' },
     })
-    const [loading, setLoading] = useState(false)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target
@@ -40,9 +40,7 @@ export function CreatePatientDialog({ isOpen, onClose, onCreatePatient }: Create
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        setLoading(true)
         onCreatePatient(patient)
-        setLoading(false)
     }
 
     return (

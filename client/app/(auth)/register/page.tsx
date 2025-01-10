@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
+import { Loader2 } from 'lucide-react'
 
 export default function RegisterPage() {
   const [name, setName] = useState('')
@@ -17,7 +18,7 @@ export default function RegisterPage() {
   const [role, setRole] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
-  const { register } = useAuth()
+  const { register, loading } = useAuth()
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -109,7 +110,10 @@ export default function RegisterPage() {
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button type="submit" onClick={handleSubmit}>Register</Button>
+          <Button type="submit" onClick={handleSubmit} disabled={loading}>
+            {loading && <Loader2 className='h-5 w-5' />}
+            Register
+          </Button>
         </CardFooter>
       </Card>
     </div>

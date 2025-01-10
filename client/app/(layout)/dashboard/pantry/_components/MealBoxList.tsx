@@ -2,7 +2,7 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { PlusCircle, Trash2 } from 'lucide-react'
+import { PlusCircle, Trash2, Loader2 } from 'lucide-react';
 import { DeliveryPersonnel, MealBox } from './types';
 
 interface MealBoxListProps {
@@ -11,6 +11,7 @@ interface MealBoxListProps {
     onAssignMealBox: (mealBoxId: string, deliveryPersonnelId: string) => void
     onUpdateDeliveryStatus: (mealBoxId: string, status: MealBox['status'], deliveryNotes?: string) => void
     onDeleteMealBox: (mealBoxId: string) => void
+    loading: boolean
 }
 
 export function MealBoxList({
@@ -18,7 +19,8 @@ export function MealBoxList({
     deliveryPersonnel,
     onAssignMealBox,
     onUpdateDeliveryStatus,
-    onDeleteMealBox
+    onDeleteMealBox,
+    loading
 }: MealBoxListProps) {
     return (
         <div>
@@ -78,8 +80,11 @@ export function MealBoxList({
                                     size="sm"
                                     onClick={() => onDeleteMealBox(mealBox._id)}
                                     className="ml-2"
+                                    disabled={loading}
                                 >
-                                    <Trash2 className="h-4 w-4" />
+                                    {loading ? <Loader2 className='h-5 w-5' />
+                                        :
+                                        <Trash2 className="h-4 w-4" />}
                                 </Button>
                             </TableCell>
                         </TableRow>

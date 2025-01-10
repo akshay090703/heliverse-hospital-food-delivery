@@ -11,7 +11,7 @@ export default function MainLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const { user, logout } = useAuth();
+    const { user, logout, loading } = useAuth();
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
     if (!user) {
@@ -27,6 +27,7 @@ export default function MainLayout({
     return (
         <>
             <Navbar
+                loading={loading}
                 user={user}
                 onLogout={logout}
                 onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}

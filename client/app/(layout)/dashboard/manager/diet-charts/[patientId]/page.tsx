@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import CreateDietPlan from '../components/CreateDietPlan';
 import { Skeleton } from '@/components/ui/skeleton';
 import DeleteDietChart from '../components/DeleteDietChart';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface DietPlan {
@@ -42,6 +42,7 @@ const EditDietPlanPage = () => {
     const [patientName, setPatientName] = useState('');
     const [dietPlan, setDietPlan] = useState<DietPlan | null>(null);
     const [loading, setLoading] = useState(false);
+    const [updateLoading, setUpdateLoading] = useState(false)
 
     useEffect(() => {
         const fetchDietPlan = async () => {
@@ -106,17 +107,19 @@ const EditDietPlanPage = () => {
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(dietPlan);
 
         if (!dietPlan) return;
 
         try {
+            setUpdateLoading(true)
             const res = await axios.put(`/diet-charts/${dietPlan._id}`, dietPlan);
             console.log(res);
             toast.success('Diet plan updated successfully')
             router.push('/dashboard/manager');
         } catch (error) {
             toast.error('Failed to update diet plan')
+        } finally {
+            setUpdateLoading(false)
         }
     };
 
@@ -224,7 +227,10 @@ const EditDietPlanPage = () => {
                         </CardContent>
                     </Card>
                 ))}
-                <Button type="submit">Update Diet Plan</Button>
+                <Button type="submit" disabled={updateLoading}>
+                    {loading && <Loader2 className='h-5 w-5' />}
+                    Update Diet Plan
+                </Button>
             </form>
         </div> : <CreateDietPlan patientId={params.patientId as string} />
     );

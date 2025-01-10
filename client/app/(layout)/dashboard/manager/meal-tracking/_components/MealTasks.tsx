@@ -14,6 +14,7 @@ export function MealTasks() {
         handleDeleteTask,
         handleUpdateTaskStatus,
         sortTasks,
+        loading
     } = useMealTasks()
 
     return (
@@ -41,6 +42,7 @@ export function MealTasks() {
                 onUpdateTask={handleUpdateTask}
                 onDeleteTask={handleDeleteTask}
                 onUpdateTaskStatus={handleUpdateTaskStatus}
+                loading={loading}
             />
         </div>
     )

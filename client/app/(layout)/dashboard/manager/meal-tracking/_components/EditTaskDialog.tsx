@@ -11,14 +11,16 @@ import { Task } from './types'
 import { usePatients } from './_hooks/usePatients'
 import { useDietCharts } from './_hooks/useDietCharts'
 import { useUsers } from './_hooks/useUsers'
+import { Loader2 } from 'lucide-react'
 
 interface EditTaskDialogProps {
     task: Task | null
     onClose: () => void
     onUpdateTask: (task: Task) => Promise<void>
+    loading: boolean
 }
 
-export function EditTaskDialog({ task, onClose, onUpdateTask }: EditTaskDialogProps) {
+export function EditTaskDialog({ task, onClose, onUpdateTask, loading }: EditTaskDialogProps) {
     const [editingTask, setEditingTask] = useState<Task | null>(null)
     const { patients, searchPatients } = usePatients()
     const { dietCharts, searchDietCharts } = useDietCharts()
@@ -57,7 +59,7 @@ export function EditTaskDialog({ task, onClose, onUpdateTask }: EditTaskDialogPr
     }, [task])
 
     const handleUpdateTask = async () => {
-        console.log(editingTask);
+        // console.log(editingTask);
 
         if (editingTask) {
             await onUpdateTask(editingTask)
@@ -229,7 +231,10 @@ export function EditTaskDialog({ task, onClose, onUpdateTask }: EditTaskDialogPr
                             className="col-span-3"
                         />
                     </div>
-                    <Button onClick={handleUpdateTask}>Update Task</Button>
+                    <Button onClick={handleUpdateTask} disabled={loading}>
+                        {loading && <Loader2 className='h-5 w-5' />}
+                        Update Task
+                    </Button>
                 </div>
             </DialogContent>
         </Dialog>

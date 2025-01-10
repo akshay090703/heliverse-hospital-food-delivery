@@ -14,6 +14,7 @@ import TaskSection from './_components/task-section'
 import AnalyticsSection from './_components/analytic-section'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
+import { Loader2 } from 'lucide-react'
 
 interface InventoryItem {
     _id: string
@@ -35,6 +36,7 @@ export default function PantryManagementPage() {
     const [newItem, setNewItem] = useState<Partial<InventoryItem>>({})
     const [editingItem, setEditingItem] = useState<InventoryItem | null>(null)
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         fetchInventory()
@@ -53,6 +55,7 @@ export default function PantryManagementPage() {
     const handleUpdateItem = async () => {
         if (!editingItem) return
         try {
+            setLoading(true)
             const response = await axios.put(`/pantry/inventory`, editingItem)
             // console.log(response);
             toast.success('Item updated successfully')
@@ -60,12 +63,15 @@ export default function PantryManagementPage() {
             setEditingItem(null)
         } catch (error) {
             toast.error('Failed to update item')
+        } finally {
+            setLoading(false)
         }
     }
 
 
     const handleAddItem = async () => {
         try {
+            setLoading(true)
             const response = await axios.post('/pantry/inventory', newItem)
             // console.log(response);
 
@@ -77,18 +83,23 @@ export default function PantryManagementPage() {
             setNewItem({})
         } catch (error) {
             toast.error('Failed to add item')
+        } finally {
+            setLoading(false)
         }
     }
 
     const handleDeleteItem = async (id: string) => {
         try {
+            setLoading(true)
             const response = await axios.delete(`/pantry/inventory/${id}`)
-            console.log(response);
+            // console.log(response);
 
             toast.success('Item deleted successfully')
             fetchInventory()
         } catch (error) {
             toast.error('Failed to delete item')
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -230,7 +241,10 @@ export default function PantryManagementPage() {
                                                 />
                                             </div>
                                         </div>
-                                        <Button onClick={handleAddItem}>Add Item</Button>
+                                        <Button onClick={handleAddItem} disabled={loading}>
+                                            {loading && <Loader2 className='h-5 w-5' />}
+                                            Add Item
+                                        </Button>
                                     </DialogContent>
                                 </Dialog>
 
@@ -258,7 +272,8 @@ export default function PantryManagementPage() {
                                                     <Button variant="outline" className="mr-2" onClick={() => setEditingItem(item)}>
                                                         Edit
                                                     </Button>
-                                                    <Button variant="destructive" onClick={() => handleDeleteItem(item._id)}>
+                                                    <Button variant="destructive" onClick={() => handleDeleteItem(item._id)} disabled={loading}>
+                                                        (loading && <Loader2 className='h-5 w-5' />)
                                                         Delete
                                                     </Button>
                                                 </TableCell>
@@ -387,7 +402,10 @@ export default function PantryManagementPage() {
                                         </div>
                                     </div>
 
-                                    <Button onClick={handleUpdateItem}>Update Item</Button>
+                                    <Button onClick={handleUpdateItem} disabled={loading}>
+                                        {loading && <Loader2 className='h-5 w-5' />}
+                                        Update Item
+                                    </Button>
                                 </DialogContent>
                             </Dialog>
                         )}

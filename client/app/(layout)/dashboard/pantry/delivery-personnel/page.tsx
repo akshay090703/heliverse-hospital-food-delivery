@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 
 export default function DeliveryPersonnelPage() {
     const [personnel, setPersonnel] = useState<DeliveryPersonnel[]>([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         fetchPersonnel()
@@ -24,18 +25,21 @@ export default function DeliveryPersonnelPage() {
 
     const updatePersonnel = async (id: string, updates: Partial<DeliveryPersonnel>) => {
         try {
+            setLoading(true)
             await axios.put(`/inner-pantry/delivery-personnel/${id}`, updates)
             toast.success('Delivery personnel updated successfully')
             fetchPersonnel()
         } catch (error) {
             toast.error('Failed to update delivery personnel')
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <div className="container mx-auto py-6">
             <h1 className="text-2xl font-bold mb-6">Delivery Personnel Management</h1>
-            <DeliveryPersonnelList personnel={personnel} onUpdatePersonnel={updatePersonnel} />
+            <DeliveryPersonnelList loading={loading} personnel={personnel} onUpdatePersonnel={updatePersonnel} />
         </div>
     )
 }

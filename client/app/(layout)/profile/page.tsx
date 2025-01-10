@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
+import { Loader2 } from 'lucide-react'
 
 interface UserProfile {
     name: string
@@ -19,6 +20,7 @@ interface UserProfile {
 export default function ProfilePage() {
     const [profile, setProfile] = useState<UserProfile | null>(null)
     const [isEditing, setIsEditing] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         fetchProfile()
@@ -27,7 +29,6 @@ export default function ProfilePage() {
     const fetchProfile = async () => {
         try {
             const response = await axios.get('/auth/user')
-            console.log(response);
 
             setProfile(response.data)
         } catch (error) {
@@ -43,11 +44,14 @@ export default function ProfilePage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
+            setLoading(true)
             await axios.put('/auth/user', profile)
             toast.success('Profile updated successfully')
             setIsEditing(false)
         } catch (error) {
             toast.error('Failed to update profile')
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -117,7 +121,10 @@ export default function ProfilePage() {
                         </div>
                         {isEditing ? (
                             <div className="mt-4 space-x-2">
-                                <Button type="submit">Save Changes</Button>
+                                <Button type="submit" disabled={loading}>
+                                    <Loader2 className='h-5 w-5' />
+                                    Save Changes
+                                </Button>
                                 <Button variant="outline" onClick={() => setIsEditing(false)}>Cancel</Button>
                             </div>
                         ) : (

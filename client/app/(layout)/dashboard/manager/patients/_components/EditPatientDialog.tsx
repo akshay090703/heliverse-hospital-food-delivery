@@ -6,15 +6,17 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { Patient } from './types'
+import { Loader2 } from 'lucide-react'
 
 interface EditPatientDialogProps {
     isOpen: boolean
     onClose: () => void
     patient: Patient
     onUpdatePatient: (patient: Patient) => void
+    loading: boolean
 }
 
-export function EditPatientDialog({ isOpen, onClose, patient, onUpdatePatient }: EditPatientDialogProps) {
+export function EditPatientDialog({ isOpen, onClose, patient, onUpdatePatient, loading }: EditPatientDialogProps) {
     const [editedPatient, setEditedPatient] = useState<Patient>(patient)
 
     useEffect(() => {
@@ -161,7 +163,10 @@ export function EditPatientDialog({ isOpen, onClose, patient, onUpdatePatient }:
                             />
                         </div>
                     </div>
-                    <Button type="submit">Update Patient</Button>
+                    <Button type="submit" disabled={loading}>
+                        {loading && <Loader2 className='h-5 w-5' />}
+                        Update Patient
+                    </Button>
                 </form>
             </DialogContent>
         </Dialog>

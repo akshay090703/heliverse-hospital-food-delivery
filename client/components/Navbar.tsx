@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { User } from 'lucide-react';
+import { Loader2, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -16,9 +16,10 @@ interface NavbarProps {
     user: { name: string; role: 'manager' | 'pantry' | 'delivery' } | null;
     onLogout: () => void;
     onToggleSidebar: () => void;
+    loading: boolean
 }
 
-export function Navbar({ user, onLogout, onToggleSidebar }: NavbarProps) {
+export function Navbar({ user, onLogout, onToggleSidebar, loading }: NavbarProps) {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
 
@@ -70,8 +71,9 @@ export function Navbar({ user, onLogout, onToggleSidebar }: NavbarProps) {
                                     <DropdownMenuItem>
                                         <Link href="/profile">Profile</Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={onLogout}>
+                                    <DropdownMenuItem onClick={onLogout} disabled={loading}>
                                         Logout
+                                        {loading && <Loader2 className='h-5 w-5' />}
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>

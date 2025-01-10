@@ -6,13 +6,16 @@ import React, { useState } from 'react'
 import axios from "@/lib/axios"
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { Loader2 } from 'lucide-react'
 
 const DeleteDietChart = ({ id }: { id: string }) => {
     const [openDialog, setOpenDialog] = useState(false);
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
 
     const deleteDietPlan = async (id: string) => {
         try {
+            setLoading(true)
             const res = await axios.delete('/diet-charts/' + id);
 
             if (res.status === 200) {
@@ -21,13 +24,18 @@ const DeleteDietChart = ({ id }: { id: string }) => {
             }
         } catch (error: any) {
             toast.error(error?.data?.message)
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <>
             <div>
-                <Button variant={'destructive'} onClick={() => setOpenDialog(true)}>Delete Plan</Button>
+                <Button variant={'destructive'} onClick={() => setOpenDialog(true)} disabled={loading}>
+                    {loading && <Loader2 className='h-5 w-5' />}
+                    Delete Plan
+                </Button>
             </div>
 
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>

@@ -15,6 +15,7 @@ interface TaskListProps {
     onUpdateTask: (task: Task) => Promise<void>
     onDeleteTask: (id: string) => Promise<void>
     onUpdateTaskStatus: (id: string, status: Task['status']) => Promise<void>
+    loading: boolean
 }
 
 export function TaskList({
@@ -24,6 +25,7 @@ export function TaskList({
     onUpdateTask,
     onDeleteTask,
     onUpdateTaskStatus,
+    loading
 }: TaskListProps) {
     const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
     const [editingTask, setEditingTask] = useState<Task | null>(null)
@@ -84,12 +86,14 @@ export function TaskList({
                 onClose={() => setIsCreateDialogOpen(false)}
                 onCreateTask={onCreateTask}
                 taskType={taskType}
+                loading={loading}
             />
 
             <EditTaskDialog
                 task={editingTask}
                 onClose={() => setEditingTask(null)}
                 onUpdateTask={onUpdateTask}
+                loading={loading}
             />
         </>
     )

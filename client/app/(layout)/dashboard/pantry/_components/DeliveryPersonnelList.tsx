@@ -2,13 +2,15 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 import { DeliveryPersonnel } from './types'
+import { Loader2 } from 'lucide-react'
 
 interface DeliveryPersonnelListProps {
     personnel: DeliveryPersonnel[]
     onUpdatePersonnel: (id: string, updates: Partial<DeliveryPersonnel>) => void
+    loading: boolean
 }
 
-export function DeliveryPersonnelList({ personnel, onUpdatePersonnel }: DeliveryPersonnelListProps) {
+export function DeliveryPersonnelList({ personnel, onUpdatePersonnel, loading }: DeliveryPersonnelListProps) {
     return (
         <Table>
             <TableHeader>
@@ -32,7 +34,9 @@ export function DeliveryPersonnelList({ personnel, onUpdatePersonnel }: Delivery
                         <TableCell>
                             <Button
                                 variant={'outline'} onClick={() => onUpdatePersonnel(person._id, { deliveryStatus: person.deliveryStatus === 'available' ? 'busy' : 'available' })}
+                                disabled={loading}
                             >
+                                {loading && <Loader2 className='h-5 w-5' />}
                                 Change Status
                             </Button>
                         </TableCell>

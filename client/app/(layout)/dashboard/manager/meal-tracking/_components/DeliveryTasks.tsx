@@ -14,6 +14,7 @@ export function DeliveryTasks() {
         handleDeleteTask,
         handleUpdateTaskStatus,
         sortTasks,
+        loading
     } = useDeliveryTasks()
 
     return (
@@ -41,6 +42,7 @@ export function DeliveryTasks() {
                 onUpdateTask={handleUpdateTask}
                 onDeleteTask={handleDeleteTask}
                 onUpdateTaskStatus={handleUpdateTaskStatus}
+                loading={loading}
             />
         </div>
     )

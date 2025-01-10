@@ -7,11 +7,12 @@ import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner'
+import { Loader2 } from 'lucide-react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { login } = useAuth()
+  const { login, loading } = useAuth()
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -54,7 +55,8 @@ export default function LoginPage() {
             required
           />
         </div>
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading && <Loader2 className='h-5 w-5' />}
           Login
         </Button>
       </form>
