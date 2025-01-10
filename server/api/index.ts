@@ -40,6 +40,9 @@ app.use("/api/tasks", taskRoutes);
 app.use("/api/inner-pantry", innerPantryRoutes);
 app.use("/api/summary", summaryRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api", (req, res) => {
+  return res.status(200).json({ message: "Hello World!" });
+});
 
 // Error handling middleware
 app.use(
