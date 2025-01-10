@@ -66,7 +66,7 @@ export const register = async (req: Request, res: Response) => {
 
 export const logout = (req: Request, res: Response) => {
   res.setHeader("Set-Cookie", [
-    `token=adasdsa; Path=/; Max-Age=0; HttpOnly; ${
+    `token=; Path=/; Max-Age=0; HttpOnly; ${
       COOKIE_OPTIONS.secure ? "Secure;" : ""
     } SameSite=None`,
   ]);
