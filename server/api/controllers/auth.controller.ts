@@ -65,7 +65,11 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const logout = (req: Request, res: Response) => {
-  res.clearCookie("token");
+  res.setHeader("Set-Cookie", [
+    `token=; Path=/; Max-Age=0; HttpOnly; ${
+      COOKIE_OPTIONS.secure ? "Secure;" : ""
+    } SameSite=None`,
+  ]);
   res.json({ message: "Logged out successfully" });
 };
 
