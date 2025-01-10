@@ -66,11 +66,12 @@ export const register = async (req: Request, res: Response) => {
 
 export const logout = (req: Request, res: Response) => {
   res.setHeader("Set-Cookie", [
-    `token=; Path=/; Max-Age=0; HttpOnly; ${
+    `token=adasdsa; Path=/; Max-Age=0; HttpOnly; ${
       COOKIE_OPTIONS.secure ? "Secure;" : ""
     } SameSite=None`,
   ]);
-  res.json({ message: "Logged out successfully" });
+  res.clearCookie("token");
+  res.status(200).json({ message: "Logged out successfully" });
 };
 
 export const validateToken = async (req: Request, res: Response) => {
