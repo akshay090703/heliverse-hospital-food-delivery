@@ -122,7 +122,7 @@ export default function ProfilePage() {
                         {isEditing ? (
                             <div className="mt-4 space-x-2">
                                 <Button type="submit" disabled={loading}>
-                                    <Loader2 className='h-5 w-5' />
+                                    {loading && <Loader2 className='h-5 w-5' />}
                                     Save Changes
                                 </Button>
                                 <Button variant="outline" onClick={() => setIsEditing(false)}>Cancel</Button>

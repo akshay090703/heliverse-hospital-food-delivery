@@ -273,7 +273,7 @@ export default function PantryManagementPage() {
                                                         Edit
                                                     </Button>
                                                     <Button variant="destructive" onClick={() => handleDeleteItem(item._id)} disabled={loading}>
-                                                        (loading && <Loader2 className='h-5 w-5' />)
+                                                        {loading && <Loader2 className='h-5 w-5' />}
                                                         Delete
                                                     </Button>
                                                 </TableCell>
