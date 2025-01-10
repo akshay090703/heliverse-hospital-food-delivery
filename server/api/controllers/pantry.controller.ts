@@ -6,11 +6,12 @@ import { Types } from "mongoose";
 export const getPantryTasks = async (req: any, res: Response) => {
   try {
     const tasks = await Task.find({
-      assignedTo: req.user.userId,
       taskType: "preparation",
     })
       .populate("patientId")
       .populate("dietChartId");
+    // console.log(tasks);
+
     res.json(tasks);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch pantry tasks" });
@@ -23,7 +24,6 @@ export const updateTaskStatus = async (req: any, res: Response) => {
     const task = await Task.findOneAndUpdate(
       {
         _id: req.params.id,
-        assignedTo: req.user.userId,
         taskType: "preparation",
       },
       { status },

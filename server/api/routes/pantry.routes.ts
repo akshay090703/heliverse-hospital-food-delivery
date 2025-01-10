@@ -15,7 +15,12 @@ const router = express.Router();
 
 // Task management routes
 router.get("/tasks", auth, authorize("pantry", "manager"), getPantryTasks);
-router.put("/tasks/:id/status", auth, authorize("pantry"), updateTaskStatus);
+router.put(
+  "/tasks/:id/status",
+  auth,
+  authorize("pantry", "manager"),
+  updateTaskStatus
+);
 
 // Inventory management routes
 router.get("/inventory", auth, authorize("pantry", "manager"), getInventory);

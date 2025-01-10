@@ -9,6 +9,7 @@ interface PantryTask {
     id: string
     description: string
     status: 'pending' | 'in-progress' | 'completed'
+    mealType: string
 }
 
 interface InventoryItem {
@@ -31,7 +32,6 @@ const TaskSection = () => {
     const fetchTasks = async () => {
         try {
             const response = await axios.get('/pantry/tasks')
-            console.log(response);
 
             setTasks(response.data)
         } catch (error) {
@@ -41,7 +41,6 @@ const TaskSection = () => {
     const handleUpdateTaskStatus = async (taskId: string, newStatus: PantryTask['status']) => {
         try {
             const response = await axios.put(`/pantry/tasks/${taskId}/status`, { status: newStatus })
-            console.log(response);
 
             toast.success('Task status updated successfully')
             fetchTasks()
@@ -71,7 +70,7 @@ const TaskSection = () => {
                     <TableBody>
                         {tasks.map((task) => (
                             <TableRow key={task.id}>
-                                <TableCell>{task.description}</TableCell>
+                                <TableCell>{task.mealType} Meal</TableCell>
                                 <TableCell>{task.status}</TableCell>
                                 <TableCell>
                                     <Select

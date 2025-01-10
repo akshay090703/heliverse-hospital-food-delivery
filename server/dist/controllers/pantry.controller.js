@@ -10,11 +10,11 @@ const mongoose_1 = require("mongoose");
 const getPantryTasks = async (req, res) => {
     try {
         const tasks = await Task_1.default.find({
-            assignedTo: req.user.userId,
             taskType: "preparation",
         })
             .populate("patientId")
             .populate("dietChartId");
+        // console.log(tasks);
         res.json(tasks);
     }
     catch (error) {
@@ -27,7 +27,6 @@ const updateTaskStatus = async (req, res) => {
         const { status } = req.body;
         const task = await Task_1.default.findOneAndUpdate({
             _id: req.params.id,
-            assignedTo: req.user.userId,
             taskType: "preparation",
         }, { status }, { new: true });
         if (!task) {

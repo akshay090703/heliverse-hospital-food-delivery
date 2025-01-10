@@ -9,7 +9,7 @@ const pantry_controller_1 = require("../controllers/pantry.controller");
 const router = express_1.default.Router();
 // Task management routes
 router.get("/tasks", auth_middleware_1.auth, (0, auth_middleware_1.authorize)("pantry", "manager"), pantry_controller_1.getPantryTasks);
-router.put("/tasks/:id/status", auth_middleware_1.auth, (0, auth_middleware_1.authorize)("pantry"), pantry_controller_1.updateTaskStatus);
+router.put("/tasks/:id/status", auth_middleware_1.auth, (0, auth_middleware_1.authorize)("pantry", "manager"), pantry_controller_1.updateTaskStatus);
 // Inventory management routes
 router.get("/inventory", auth_middleware_1.auth, (0, auth_middleware_1.authorize)("pantry", "manager"), pantry_controller_1.getInventory);
 router.post("/inventory", auth_middleware_1.auth, (0, auth_middleware_1.authorize)("pantry", "manager"), pantry_controller_1.addInventoryItem);
