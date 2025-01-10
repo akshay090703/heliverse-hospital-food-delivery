@@ -38,7 +38,7 @@ app.use("/api/tasks", task_routes_1.default);
 app.use("/api/inner-pantry", innerPantry_routes_1.default);
 app.use("/api/summary", summary_routes_1.default);
 app.use("/api/analytics", analytics_routes_1.default);
-app.use("/api", (req, res) => {
+app.use("/api/", (req, res) => {
     return res.status(200).json({ message: "Hello World!" });
 });
 // Error handling middleware
