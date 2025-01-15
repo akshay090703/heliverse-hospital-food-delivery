@@ -73,7 +73,7 @@ export function Navbar({ user, onLogout, onToggleSidebar, loading }: NavbarProps
                                     </DropdownMenuItem>
                                     <DropdownMenuItem onClick={onLogout} disabled={loading}>
                                         Logout
-                                        {loading && <Loader2 className='h-5 w-5' />}
+                                        {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>

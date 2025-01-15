@@ -164,7 +164,7 @@ export function EditPatientDialog({ isOpen, onClose, patient, onUpdatePatient, l
                         </div>
                     </div>
                     <Button type="submit" disabled={loading}>
-                        {loading && <Loader2 className='h-5 w-5' />}
+                        {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                         Update Patient
                     </Button>
                 </form>

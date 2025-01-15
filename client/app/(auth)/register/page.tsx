@@ -111,7 +111,7 @@ export default function RegisterPage() {
         </CardContent>
         <CardFooter className="flex justify-between">
           <Button type="submit" onClick={handleSubmit} disabled={loading}>
-            {loading && <Loader2 className='h-5 w-5' />}
+            {loading && <Loader2 className='h-5 w-5 animate-spin' />}
             Register
           </Button>
         </CardFooter>

@@ -228,7 +228,7 @@ const EditDietPlanPage = () => {
                     </Card>
                 ))}
                 <Button type="submit" disabled={updateLoading}>
-                    {loading && <Loader2 className='h-5 w-5' />}
+                    {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                     Update Diet Plan
                 </Button>
             </form>

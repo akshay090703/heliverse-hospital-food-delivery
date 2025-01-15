@@ -155,7 +155,7 @@ const CreateDietPlan = ({ patientId }: { patientId: string }) => {
                     </Card>
                 ))}
                 <Button type="submit" disabled={loading}>
-                    {loading && <Loader2 className='h-5 w-5' />}
+                    {loading && <Loader2 className='h-5 w-5  animate-spin' />}
 
                     Create Diet Plan
                 </Button>

@@ -56,7 +56,7 @@ export default function LoginPage() {
           />
         </div>
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading && <Loader2 className='h-5 w-5' />}
+          {loading && <Loader2 className='h-5 w-5 animate-spin' />}
           Login
         </Button>
       </form>

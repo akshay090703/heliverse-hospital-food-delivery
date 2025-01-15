@@ -232,7 +232,7 @@ export function EditTaskDialog({ task, onClose, onUpdateTask, loading }: EditTas
                         />
                     </div>
                     <Button onClick={handleUpdateTask} disabled={loading}>
-                        {loading && <Loader2 className='h-5 w-5' />}
+                        {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                         Update Task
                     </Button>
                 </div>

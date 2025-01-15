@@ -219,7 +219,7 @@ export function CreateTaskDialog({ isOpen, onClose, onCreateTask, taskType, load
           </div>
         </div>
         <Button onClick={handleCreateTask} disabled={loading}>
-          {loading && <Loader2 className='h-5 w-5' />}
+          {loading && <Loader2 className='h-5 w-5 animate-spin' />}
           Create Task
         </Button>
       </DialogContent>

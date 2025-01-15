@@ -242,7 +242,7 @@ export default function PantryManagementPage() {
                                             </div>
                                         </div>
                                         <Button onClick={handleAddItem} disabled={loading}>
-                                            {loading && <Loader2 className='h-5 w-5' />}
+                                            {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                                             Add Item
                                         </Button>
                                     </DialogContent>
@@ -273,7 +273,7 @@ export default function PantryManagementPage() {
                                                         Edit
                                                     </Button>
                                                     <Button variant="destructive" onClick={() => handleDeleteItem(item._id)} disabled={loading}>
-                                                        {loading && <Loader2 className='h-5 w-5' />}
+                                                        {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                                                         Delete
                                                     </Button>
                                                 </TableCell>
@@ -403,7 +403,7 @@ export default function PantryManagementPage() {
                                     </div>
 
                                     <Button onClick={handleUpdateItem} disabled={loading}>
-                                        {loading && <Loader2 className='h-5 w-5' />}
+                                        {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                                         Update Item
                                     </Button>
                                 </DialogContent>

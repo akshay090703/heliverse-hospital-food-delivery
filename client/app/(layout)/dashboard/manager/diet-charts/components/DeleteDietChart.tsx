@@ -33,7 +33,7 @@ const DeleteDietChart = ({ id }: { id: string }) => {
         <>
             <div>
                 <Button variant={'destructive'} onClick={() => setOpenDialog(true)} disabled={loading}>
-                    {loading && <Loader2 className='h-5 w-5' />}
+                    {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                     Delete Plan
                 </Button>
             </div>

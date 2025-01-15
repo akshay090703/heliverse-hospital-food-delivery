@@ -24,7 +24,7 @@ export function DeletePatientDialog({ isOpen, onClose, patientName, onDeletePati
                 <DialogFooter>
                     <Button variant="outline" onClick={onClose}>Cancel</Button>
                     <Button variant="destructive" onClick={onDeletePatient} disabled={loading}>
-                        {loading && <Loader2 className='h-5 w-5' />}
+                        {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                         Delete
                     </Button>
                 </DialogFooter>

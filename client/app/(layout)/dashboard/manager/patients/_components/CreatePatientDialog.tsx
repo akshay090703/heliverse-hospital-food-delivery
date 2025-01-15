@@ -172,7 +172,7 @@ export function CreatePatientDialog({ isOpen, onClose, onCreatePatient, loading 
                         </div>
                     </div>
                     <Button disabled={loading} type="submit">
-                        {loading && <Loader2 className='h-4 w-4' />}
+                        {loading && <Loader2 className='h-4 w-4 animate-spin' />}
                         Create Patient
                     </Button>
                 </form>

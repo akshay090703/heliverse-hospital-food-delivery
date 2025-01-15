@@ -82,7 +82,7 @@ export function MealBoxList({
                                     className="ml-2"
                                     disabled={loading}
                                 >
-                                    {loading ? <Loader2 className='h-5 w-5' />
+                                    {loading ? <Loader2 className='h-5 w-5 animate-spin' />
                                         :
                                         <Trash2 className="h-4 w-4" />}
                                 </Button>

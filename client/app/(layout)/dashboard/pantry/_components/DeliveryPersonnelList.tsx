@@ -36,7 +36,7 @@ export function DeliveryPersonnelList({ personnel, onUpdatePersonnel, loading }:
                                 variant={'outline'} onClick={() => onUpdatePersonnel(person._id, { deliveryStatus: person.deliveryStatus === 'available' ? 'busy' : 'available' })}
                                 disabled={loading}
                             >
-                                {loading && <Loader2 className='h-5 w-5' />}
+                                {loading && <Loader2 className='h-5 w-5 animate-spin' />}
                                 Change Status
                             </Button>
                         </TableCell>
