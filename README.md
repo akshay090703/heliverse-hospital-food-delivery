@@ -92,41 +92,41 @@ The Hospital Food Delivery Management System is a comprehensive solution for man
 Login endpoint for all users.
 
 Request:
-\`\`\`json
+```json
 {
-"email": "string",
-"password": "string"
+    "email": "string",
+    "password": "string"
 }
-\`\`\`
+```
 
 Response:
-\`\`\`json
+```json
 {
-"user": {
-"id": "string",
-"name": "string",
-"role": "manager" | "pantry" | "delivery"
+    "user": {
+        "id": "string",
+        "name": "string",
+        "role": "manager" | "pantry" | "delivery"
+    }
 }
-}
-\`\`\`
+```
 
 #### POST /api/auth/register
 
 Register new users (manager access only).
 
 Request:
-\`\`\`json
+```json
 {
-"name": "string",
-"email": "string",
-"password": "string",
-"role": "manager" | "pantry" | "delivery",
-"contactInfo": {
-"phone": "string",
-"address": "string"
+    "name": "string",
+    "email": "string",
+    "password": "string",
+    "role": "manager" | "pantry" | "delivery",
+    "contactInfo": {
+        "phone": "string",
+        "address": "string"
+    }
 }
-}
-\`\`\`
+```
 
 ### Manager Endpoints
 
@@ -182,66 +182,66 @@ Request:
 
 ### User Schema
 
-\`\`\`typescript
+```typescript
 {
-name: string;
-email: string;
-password: string;
-role: 'manager' | 'pantry' | 'delivery';
-contactInfo: {
-phone: string;
-address: string;
-};
-deliveryStatus?: 'available' | 'busy' | 'offline';
-currentAssignments?: number;
-maxAssignments?: number;
-rating?: number;
+    name: string;
+    email: string;
+    password: string;
+    role: 'manager' | 'pantry' | 'delivery';
+    contactInfo: {
+        phone: string;
+        address: string;
+    };
+    deliveryStatus?: 'available' | 'busy' | 'offline';
+    currentAssignments?: number;
+    maxAssignments?: number;
+    rating?: number;
 }
-\`\`\`
+```
 
 ### Patient Schema
 
-\`\`\`typescript
+```typescript
 {
-name: string;
-age: number;
-gender: string;
-contactInfo: {
-phone: string;
-emergencyContact: string;
-};
-roomDetails: {
-roomNumber: number;
-bedNumber: number;
-floorNumber: number;
-};
-medicalDetails: {
-diseases: string[];
-allergies: string[];
-};
-otherDetails: {
-admissionDate: Date;
-dietaryRestrictions: string[];
-};
+    name: string;
+    age: number;
+    gender: string;
+    contactInfo: {
+        phone: string;
+        emergencyContact: string;
+    };
+    roomDetails: {
+        roomNumber: number;
+        bedNumber: number;
+        floorNumber: number;
+    };
+    medicalDetails: {
+        diseases: string[];
+        allergies: string[];
+    };
+    otherDetails: {
+        admissionDate: Date;
+        dietaryRestrictions: string[];
+    };
 }
-\`\`\`
+```
 
 ### MealBox Schema
 
-\`\`\`typescript
+```typescript
 {
-taskId: ObjectId;
-patientId: ObjectId;
-dietChartId: ObjectId;
-deliveryPersonnelId?: ObjectId;
-mealType: 'morning' | 'afternoon' | 'night';
-status: 'preparing' | 'ready' | 'assigned' | 'in-transit' | 'delivered';
-preparationNotes?: string;
-deliveryNotes?: string;
-deliveryTime?: Date;
-specialInstructions?: string;
+    taskId: ObjectId;
+    patientId: ObjectId;
+    dietChartId: ObjectId;
+    deliveryPersonnelId?: ObjectId;
+    mealType: 'morning' | 'afternoon' | 'night';
+    status: 'preparing' | 'ready' | 'assigned' | 'in-transit' | 'delivered';
+    preparationNotes?: string;
+    deliveryNotes?: string;
+    deliveryTime?: Date;
+    specialInstructions?: string;
 }
-\`\`\`
+```
 
 ## Frontend Documentation
 
