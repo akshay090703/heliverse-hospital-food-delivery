@@ -105,7 +105,7 @@ Response:
     "user": {
         "id": "string",
         "name": "string",
-        "role": "manager" | "pantry" | "delivery"
+        "role": 'manager' | 'pantry' | 'delivery'
     }
 }
 ```
@@ -120,7 +120,7 @@ Request:
     "name": "string",
     "email": "string",
     "password": "string",
-    "role": "manager" | "pantry" | "delivery",
+    "role": 'manager' | 'pantry' | 'delivery',
     "contactInfo": {
         "phone": "string",
         "address": "string"
